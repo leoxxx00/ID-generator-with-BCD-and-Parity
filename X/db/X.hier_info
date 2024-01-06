@@ -1,0 +1,88 @@
+|X
+digit[0] <= generated_digit[0].DB_MAX_OUTPUT_PORT_TYPE
+digit[1] <= generated_digit[1].DB_MAX_OUTPUT_PORT_TYPE
+digit[2] <= generated_digit[2].DB_MAX_OUTPUT_PORT_TYPE
+digit[3] <= generated_digit[3].DB_MAX_OUTPUT_PORT_TYPE
+bcd[0] <= encoded_bcd[0].DB_MAX_OUTPUT_PORT_TYPE
+bcd[1] <= encoded_bcd[1].DB_MAX_OUTPUT_PORT_TYPE
+bcd[2] <= encoded_bcd[2].DB_MAX_OUTPUT_PORT_TYPE
+bcd[3] <= encoded_bcd[3].DB_MAX_OUTPUT_PORT_TYPE
+odd_parity <= ParityGenerator:parity_gen.odd_parity
+even_parity <= ParityGenerator:parity_gen.even_parity
+clk => clk.IN1
+reset => reset.IN1
+enable => enable.IN1
+
+
+|X|BrunelIDNumberGenerator:brunel_gen
+digit[0] <= digit[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+digit[1] <= digit[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+digit[2] <= digit[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+digit[3] <= digit[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+clk => digit[0]~reg0.CLK
+clk => digit[1]~reg0.CLK
+clk => digit[2]~reg0.CLK
+clk => digit[3]~reg0.CLK
+clk => currentDigit[0].CLK
+clk => currentDigit[1].CLK
+clk => currentDigit[2].CLK
+clk => currentDigit[3].CLK
+clk => pulseInterval[0].CLK
+clk => pulseInterval[1].CLK
+clk => pulseInterval[2].CLK
+clk => counter[0].CLK
+clk => counter[1].CLK
+clk => counter[2].CLK
+reset => pulseInterval.OUTPUTSELECT
+reset => pulseInterval.OUTPUTSELECT
+reset => pulseInterval.OUTPUTSELECT
+reset => digit.OUTPUTSELECT
+reset => digit.OUTPUTSELECT
+reset => digit.OUTPUTSELECT
+reset => digit.OUTPUTSELECT
+reset => counter[0].ACLR
+reset => counter[1].ACLR
+reset => counter[2].ACLR
+enable => counter.OUTPUTSELECT
+enable => counter.OUTPUTSELECT
+enable => counter.OUTPUTSELECT
+enable => pulseInterval.OUTPUTSELECT
+enable => pulseInterval.OUTPUTSELECT
+enable => pulseInterval.OUTPUTSELECT
+enable => digit.OUTPUTSELECT
+enable => digit.OUTPUTSELECT
+enable => digit.OUTPUTSELECT
+enable => digit.OUTPUTSELECT
+
+
+|X|BinaryToBCDEncoder:bcd_encoder
+bcd[0] <= bcd.DB_MAX_OUTPUT_PORT_TYPE
+bcd[1] <= bcd.DB_MAX_OUTPUT_PORT_TYPE
+bcd[2] <= bcd.DB_MAX_OUTPUT_PORT_TYPE
+bcd[3] <= bcd.DB_MAX_OUTPUT_PORT_TYPE
+digit[0] => Decoder3.IN3
+digit[1] => Decoder0.IN2
+digit[1] => Decoder2.IN1
+digit[1] => Decoder3.IN2
+digit[2] => Decoder0.IN1
+digit[2] => Decoder1.IN1
+digit[2] => Decoder3.IN1
+digit[3] => Decoder0.IN0
+digit[3] => Decoder1.IN0
+digit[3] => Decoder2.IN0
+digit[3] => Decoder3.IN0
+
+
+|X|ParityGenerator:parity_gen
+odd_parity <= odd_parity.DB_MAX_OUTPUT_PORT_TYPE
+even_parity <= WideAnd0.DB_MAX_OUTPUT_PORT_TYPE
+bcd[0] => WideAnd0.IN3
+bcd[0] => comb.IN1
+bcd[1] => WideAnd0.IN2
+bcd[1] => comb.IN0
+bcd[2] => WideAnd0.IN1
+bcd[2] => comb.IN1
+bcd[3] => WideAnd0.IN0
+bcd[3] => xor_result1.IN1
+
+
